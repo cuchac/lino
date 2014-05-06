@@ -109,5 +109,6 @@ class Site(Site):
         #~ yield 'lino.modlib.pages'
         yield 'lino.projects.presto'
 
+        yield 'lino.modlib.appypod'
 
 # SITE = Site(globals())
