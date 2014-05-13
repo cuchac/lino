@@ -68,7 +68,7 @@ from functools import partial
 from lino.utils.xmlgen import etree
 #~ from lino.utils import Warning
 from django.utils.functional import Promise
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_unicode, smart_unicode
 
 
 def pretty_print(elem):
@@ -199,18 +199,17 @@ class Namespace(object):
                 item = force_unicode(item)
             if isinstance(item, dict):
                 elem.attrib.update(self.makeattribs(**item))
-            elif isinstance(item, basestring):
+            elif etree.iselement(item):
+                elem.append(item)
+            else:
+                if not isinstance(item, basestring):
+                    item = smart_unicode(item)
                 #~ if len(elem) and len(elem[-1]) == 0:
                 if len(elem):
                     last = elem[-1]
                     last.tail = (last.tail or "") + item
                 else:
                     elem.text = (elem.text or "") + item
-            elif etree.iselement(item):
-                elem.append(item)
-            else:
-                raise TypeError("bad argument: %r" % item)
-            #~ print "20130805 added %s --> %s" % (item,self.tostring(elem))
         return elem
 
     def define_names(self, names):
