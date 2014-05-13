@@ -32,7 +32,7 @@ class Plugin(Plugin):
 
     media_name = 'bootstrap'
     media_root = None
-    media_base_url = "http://twitter.github.com/bootstrap/assets/"
+    media_base_url = "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/"
 
     def on_ui_init(self, ui):
         from .plain_renderer import PlainRenderer
